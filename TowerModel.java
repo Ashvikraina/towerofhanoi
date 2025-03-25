@@ -36,21 +36,34 @@ public class TowerModel {
         }
     }
 
-    // get the total number of disks
     public int height()
     {
         return towerHeight;
     }
 
+    public void move(int source, int destination) {
 
-    // Move one disk from the source stack to the destination stack.
-    public void move(int source, int destination)
-    {
+        if (source < 0 || source > 2 || destination < 0 || destination > 2) {
+            return;
+        }
+        
+        IntegerStack src = towers[source];
+        IntegerStack dest = towers[destination];
+
+        if (src.peek() == 0) {
+            return;
+        }
+        
+        if (dest.peek() != 0 && src.peek() > dest.peek()) {
+            return;
+        }
+
+        int disk = src.pop();
+        dest.push(disk);
+        
         System.out.println("Move #" + ++moveCounter + " from " + source + " to " + destination);
-        // TODO!!
     }
 
-    // Helper method to nicely print the current model state.
     public void print()
     {
         System.out.print("Print #" + ++printCounter + " Towers of Hanoi\n");
@@ -75,7 +88,6 @@ public class TowerModel {
         System.out.println();
     }
 
-    // Test instrumentation
     public IntegerStack[] getTowers()
     {
         return towers;

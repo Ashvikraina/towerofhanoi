@@ -1,4 +1,3 @@
-
 public class TowerSolver {
     private TowerModel model;
 
@@ -7,16 +6,19 @@ public class TowerSolver {
         // Nothing to do here
     }
 
-    public void solve(TowerModel model)
-    {
+    public void solve(TowerModel model) {
         this.model = model;
-        // Call the missing solve method (not this one)
+        solveRecursive(model.height(), 0, 2, 1);
     }
 
-    // Create an overloaded solve(...) method
-    // This new method will be recursive (call itself)
-    //
-    // [ solve method here]
-    //
-
+    private void solveRecursive(int n, int from, int to, int aux) {
+        if (n == 1) {
+            model.move(from, to);
+            return;
+        }
+    
+        solveRecursive(n - 1, from, aux, to);
+        model.move(from, to);
+        solveRecursive(n - 1, aux, to, from);
+    }
 }
